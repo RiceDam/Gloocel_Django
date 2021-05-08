@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_api_key',
-    'device'
+    'Device',
     #own app components
     'Location',
 ]
