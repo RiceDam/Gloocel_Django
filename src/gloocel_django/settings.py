@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
     'rest_framework_api_key',
-    'Device',
     #own app components
-    'Location',
+    'device',
+    'location',
+    
 ]
 
 MIDDLEWARE = [
