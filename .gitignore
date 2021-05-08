@@ -65,7 +65,6 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-/__pycache__/
 
 # Flask stuff:
 instance/
@@ -133,9 +132,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-#additional migrations
-/migrations/
 
 #sqllite file/ local DB
 *.sqlite3
