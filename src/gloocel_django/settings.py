@@ -39,10 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_api_key',
-    #own app components
+    # own app components
     'device',
     'location',
-    
 ]
 
 MIDDLEWARE = [
