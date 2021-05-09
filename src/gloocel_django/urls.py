@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-
 urlpatterns = [
  path('admin/', admin.site.urls),
 	# Not sure how to add additional API routes yet?...
- path('api/', include('device.urls'))
+ path('api/', include([
+		path('device', include('device.urls')),
+	]))
 ]
