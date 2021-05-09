@@ -50,6 +50,7 @@ ipython_config.py
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
 
+# Ignore 
 
 # Environments
 .env
@@ -75,3 +76,6 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media
+
+# Ignore Scripts folder
+Scripts/
