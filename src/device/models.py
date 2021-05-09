@@ -1,5 +1,6 @@
 from django.db import models
 from rest_framework_api_key.models import APIKey
+from door.models import Door
 
 class Device(models.Model):
 
@@ -10,6 +11,7 @@ class Device(models.Model):
   device_name = models.CharField(max_length=255, primary_key=True)
   device_type = models.CharField(max_length=30)
   api_key = models.CharField(max_length=255, blank=True, null=True, editable=False)
+  door = models.ForeignKey(Door, related_name='Door', null=True, on_delete=models.CASCADE)
 
 
   def save(self, *args, **kwargs):

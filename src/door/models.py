@@ -1,7 +1,8 @@
 from django.db import models
+from location.models import Location
 
 # Create your models here.
 class Door(models.Model):
-    door_name = models.CharField(max_length = 50, null = True)
+    door_name = models.CharField(max_length = 50, null= True)
     door_type = models.CharField(max_length = 30)
-    # location_id = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, related_name='Location_Door', null=True, on_delete=models.CASCADE)
