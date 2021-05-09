@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     #own app components
     'device',
     'location',
+    'suite',
     'door',
+
 ]
 
 MIDDLEWARE = [
