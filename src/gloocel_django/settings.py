@@ -40,12 +40,11 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_api_key',
-    #own app components
+    # own app components
     'device',
     'location',
     'suite',
     'door',
-
 ]
 
 MIDDLEWARE = [
