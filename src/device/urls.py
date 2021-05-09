@@ -4,7 +4,7 @@ from device import views
 
 urlpatterns = [
  path('device/', views.DeviceList.as_view()),
- path('device/<int:pk>/', views.DeviceDetail.as_view())
+ path('device/<str:pk>/', views.DeviceDetail.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
