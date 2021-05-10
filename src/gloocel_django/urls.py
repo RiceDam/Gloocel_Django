@@ -15,11 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-# from . import views
+from django.shortcuts import redirect
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include([
-        path('door/', include('door.urls'))
-    ])),
+ path('admin/', admin.site.urls),
+
+ path('', lambda request: redirect('admin/', permanent=False)),
+
+	# Not sure how to add additional API routes yet?...
+ path('api/', include([
+		path('device', include('device.urls')),
+        path('door/', include('door.urls')),
+	]))
 ]
