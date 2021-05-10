@@ -1,8 +1,13 @@
+from django.http import Http404
 from django.shortcuts import render
+import json
 from .models import Door
 from rest_framework import mixins
 from rest_framework import generics
 from .serializers import DoorSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 
 # Create your views here.
 class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
@@ -22,23 +27,33 @@ class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
+class DoorOpen(APIView):
+ """
+ Get an instance of the Door from the database
+ """
 
-class DoorOpen(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
-    queryset = Door.objects.all()
-    serializer_class = DoorSerializer
+ def load_queue(self, door):
+  try:
+   #TODO: Instead of printing here add code to load the Door's message queue
+   # Will need to retrieve the device associated with the Door, 
+   # so need some relationship between the door and the device
 
-    """
-    Validates the user's session, then sends a message to the
-    RabbitMQ message queue. 
-    """
-    def post(self, request, *args, **kwargs):
-        # Validate user session
+   print("Mocking loading a message into RabbitMQ Queue")
+   return json.dumps({
+    'success': 'Added a message request to ' + door.door_name
+   })
+  except Exception as e:
+   return json.dumps({
+    'error': e.message
+   }) 
 
-        
-        # Send message to RabbitMQ
+ def get_door(self, pk):
+  try:
+   return Door.objects.get(pk=pk)
+  except Door.DoesNotExist:
+   raise Http404
 
-
-        # Returns a message to the user that the door has opened
-        return 
-
-    
+ def get(self, request, pk, format=None):
+  door = self.get_door(pk)
+  response = self.load_queue(door)
+  return Response(response)
