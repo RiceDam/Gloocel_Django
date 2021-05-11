@@ -29,3 +29,4 @@ urlpatterns = [
   path('location/', include('location.urls')),
   ]))
 ]
+
