@@ -24,7 +24,9 @@ urlpatterns = [
 
 	# Not sure how to add additional API routes yet?...
  path('api/', include([
-		path('device', include('device.urls')),
-        path('location', include('location.urls'))
+	path('device', include('device.urls')),
+  path('location', include('location.urls')),
+	path('device/', include('device.urls')),
+  path('door/', include('door.urls')),
 	]))
 ]
