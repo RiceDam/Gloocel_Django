@@ -14,6 +14,9 @@ class Device(models.Model):
   door = models.ForeignKey(Door, related_name='Door', null=True, on_delete=models.CASCADE)
 
 
+  def __str__(self):
+    return self.device_name
+
   def save(self, *args, **kwargs):
     self.api_key = Device.key_default(self.device_name)
     super().save(*args, **kwargs)
