@@ -16,7 +16,6 @@ class DeviceList(
   def post(self, request, *args, **kwargs):
    return self.create(request, *args, **kwargs)
 
-
 class DeviceDetail(mixins.RetrieveModelMixin,
  mixins.UpdateModelMixin,
  mixins.DestroyModelMixin,
