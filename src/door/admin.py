@@ -1,6 +1,6 @@
 from django.contrib import admin
-
-# Register your models here.
 from .models import Door
 
-admin.site.register(Door)
+@admin.register(Door)
+class DoorAdmin(admin.ModelAdmin):
+ list_display = ("door_name", "door_type", "location")
