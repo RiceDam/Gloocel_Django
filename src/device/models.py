@@ -13,7 +13,6 @@ class Device(models.Model):
   api_key = models.CharField(max_length=255, blank=True, null=True, editable=False)
   door = models.ForeignKey(Door, related_name='Door', null=True, on_delete=models.CASCADE)
 
-
   def save(self, *args, **kwargs):
     self.api_key = Device.key_default(self.device_name)
     super().save(*args, **kwargs)
