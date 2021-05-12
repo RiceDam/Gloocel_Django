@@ -7,6 +7,8 @@ class Suite(models.Model):
     version = models.IntegerField()
     location = models.ForeignKey(Location, related_name='Location_Suite', null=True, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.suite_number
 
 
 
