@@ -1,50 +1,51 @@
 from django.http import Http404
 from django.shortcuts import render
-import json
 from .models import Door
 from rest_framework import mixins
 from rest_framework import generics
-from .serializers import DoorSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from .serializers import DoorSerializer
+import json
+import pika
+from datetime import datetime
 
-
-# Create your views here.
 class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-    queryset = Door.objects.all()
-    serializer_class = DoorSerializer
+ queryset = Door.objects.all()
+ serializer_class = DoorSerializer
 
-    """
-    TODO
+ def get(self, request, *args, **kwargs):
+  return self.list(request, *args, **kwargs)
 
-    User sends their session id and we convert it to their
-    user id. Afterwards, we verify and send a response with
-    the doors the user has access to.
-    """
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+ def post(self, request, *args, **kwargs):
+  return self.create(request, *args, **kwargs)
 
 class DoorOpen(APIView):
+
+ connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+ channel = connection.channel()
+ channel.confirm_delivery()
  """
  Get an instance of the Door from the database
  """
 
  def load_queue(self, door):
   try:
-   #TODO: Instead of printing here add code to load the Door's message queue
-   # Will need to retrieve the device associated with the Door, 
-   # so need some relationship between the door and the device
 
-   print("Mocking loading a message into RabbitMQ Queue")
+   now = datetime.now()
+   dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+   message = "OPEN DOOR Message sent: {}".format(dt_string)
+
+   self.channel.basic_publish(exchange='',
+   routing_key=door.door_name,
+   body=message, mandatory=True)
+
    return json.dumps({
-    'success': 'Added a message request to ' + door.door_name
+    'success': 'Added a message request to ' + door.door_name + ' ' + message
    })
   except Exception as e:
    return json.dumps({
-    'error': e.message
+    'error': str(e)
    }) 
 
  def get_door(self, pk):
@@ -53,7 +54,7 @@ class DoorOpen(APIView):
   except Door.DoesNotExist:
    raise Http404
 
- def get(self, request, pk, format=None):
+ def post(self, request, pk, format=None):
   door = self.get_door(pk)
   response = self.load_queue(door)
   return Response(response)
