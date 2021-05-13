@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
+from rest_framework.authtoken import views
 
 urlpatterns = [
  path('admin/', admin.site.urls),
@@ -24,9 +25,10 @@ urlpatterns = [
 
 	# Not sure how to add additional API routes yet?...
  path('api/', include([
-  path('device/', include('device.urls')),
-  path('door/', include('door.urls')),
-  path('location/', include('location.urls')),
+   path('device/', include('device.urls')),
+   path('door/', include('door.urls')),
+   path('location/', include('location.urls')),
+   path('account/', include('accounts.urls')),
   ]))
 ]
 
