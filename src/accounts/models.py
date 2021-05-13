@@ -1,13 +1,14 @@
 from django.db import models
-from django.contrib import auth
 from django.contrib.auth.models import User 
 from suite.models import Suite
 from phonenumber_field.modelfields import PhoneNumberField
+from django.db.models.signals import post_save 
+from django.dispatch import receiver
 
 # Create your models here.
 
 class Person(models.Model):
-    user = models.OneToOneField(auth.models.User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     first_name = models.CharField(max_length = 50, null = True)
     last_name = models.CharField(max_length = 50, null = True)
     email = models.EmailField(max_length=254)
@@ -22,3 +23,12 @@ class Person(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+
+@receiver(post_save, sender=User)
+def create_user(sender, instance, created, **kwargs):
+    if created:
+        Person.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
