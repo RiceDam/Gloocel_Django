@@ -16,6 +16,7 @@ class Door(models.Model):
 # when model is created calls rabbitmq create queue function 
 def create_queue(sender, instance, **kwargs):
   print("Done saving an instance now creating a queue")
+  # Change this for production
   connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
   channel = connection.channel()
   msg_table = channel.queue_declare(queue=instance.door_name)
