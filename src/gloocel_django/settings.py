@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_api_key',
     'rest_framework.authtoken',
     'phonenumber_field',
-
+    'pika',
     #own app components
     'accounts',
     'device',
