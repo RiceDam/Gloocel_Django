@@ -14,3 +14,5 @@ To create a admin account /super user:
 python manage.py createsuperuser
 
 Gloocel_Flutter Mobile App: https://github.com/wueddyw/Gloocel_Mobile
+
+Gloocel_Pi: https://github.com/RoyArka/Gloocel_Pi
