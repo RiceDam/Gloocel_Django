@@ -23,12 +23,3 @@ class Person(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-
-@receiver(post_save, sender=User)
-def create_user(sender, instance, created, **kwargs):
-    if created:
-        Person.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
