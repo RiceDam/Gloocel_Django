@@ -4,11 +4,9 @@ from rest_framework.views import APIView
 from rest_framework import generics, status
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.models import Token
 from .serializers import PersonSerializer
 from .models import Person
-
-# Create your views here.
 
 """
 Registers a user if they are (Haven't tested, don't know how
@@ -44,3 +42,25 @@ class LogoutAPI(APIView):
     def get(self, request, format=None):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+
+"""
+Verifies if the user's token is valid. Returns 200 response 
+if valid, otherwise it will return a 401 response
+"""
+class VerifyAPI(APIView):
+    def get(self, request, format=None):
+        """
+        Technically never reaches these conditions as the 
+        'rest_framework.authentication.TokenAuthentication', but I 
+        implemented it incase you wanted to add additional responses
+        or switch away from the rest framework's token authentication
+        """
+        if request.auth == None:
+            content = 'No authentication token detected'
+            return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+        elif not request.user == Token.objects.get(key=request.auth).user:
+            content = 'Incorrect user or token'
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response('Successfully authenticated', status=status.HTTP_200_OK)
