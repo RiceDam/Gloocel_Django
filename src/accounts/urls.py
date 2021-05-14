@@ -7,6 +7,7 @@ urlpatterns = [
     path('register', views.RegisterAPI.as_view()),
     path('login', authViews.obtain_auth_token, name='api-token-auth'),
     path('logout', views.LogoutAPI.as_view()),
+    path('verify', views.VerifyAPI.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

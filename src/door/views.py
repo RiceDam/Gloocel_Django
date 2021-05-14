@@ -14,11 +14,20 @@ class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
  queryset = Door.objects.all()
  serializer_class = DoorSerializer
 
+ """
+ Returns a list of all doors
+
+ TODO
+ Only return doors that the user has access to
+ """
  def get(self, request, *args, **kwargs):
   return self.list(request, *args, **kwargs)
 
- def post(self, request, *args, **kwargs):
-  return self.create(request, *args, **kwargs)
+ """
+ Creates a new door (probably don't want this)
+ """
+ # def post(self, request, *args, **kwargs):
+ #  return self.create(request, *args, **kwargs)
 
 class DoorOpen(APIView):
 
