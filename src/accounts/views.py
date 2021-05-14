@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework import generics, status
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.models import Token
 from .serializers import PersonSerializer
 from .models import Person
 
@@ -43,4 +43,19 @@ Logs a user out and deletes their token from the database
 class LogoutAPI(APIView):
     def get(self, request, format=None):
         request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
+
+"""
+Verifies if the user's token is valid. Returns 200 response 
+if valid, otherwise it will return a 401 response
+"""
+class VerifyAPI(APIView):
+    def get(self, request, format=None):
+        if not request.user == Token.objects.get(key=request.auth).user:
+            """
+            Technically never reaches here, but I implemented it incase you
+            wanted to add additional responses
+            """
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         return Response(status=status.HTTP_200_OK)
