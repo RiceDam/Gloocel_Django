@@ -1,4 +1,4 @@
-# Django_gloocel
+# Gloocel_Django
 Gloocel MVP in Django
 
 additional notes for when running in dev environment, check trello card for details:
