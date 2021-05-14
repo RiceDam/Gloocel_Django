@@ -13,3 +13,4 @@ python manage.py migrate
 To create a admin account /super user:
 python manage.py createsuperuser
 
+Gloocel_Flutter Mobile App: https://github.com/wueddyw/Gloocel_Mobile
