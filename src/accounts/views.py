@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
 from rest_framework.views import APIView
 from rest_framework import generics, status
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+from django.contrib.auth.models import User
 from .serializers import PersonSerializer
-from .models import Person
+import datetime
+
 
 """
 Registers a user if they are (Haven't tested, don't know how
@@ -34,6 +35,31 @@ class RegisterAPI(generics.GenericAPIView):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+
+"""
+Logs a user in by creating a token, or refreshing their
+token if they are already logged in
+"""
+class LoginAPI(ObtainAuthToken):
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+
+        if not User.objects.filter(username=request.data.get('username')).exists():
+            return Response('Username does not exist', status=status.HTTP_404_NOT_FOUND)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
+            
+        token, created = Token.objects.get_or_create(user=serializer.validated_data['user'])
+
+        if not created:
+            token.created = datetime.datetime.utcnow()
+            token.save()
+
+        return Response({'token': token.key})  
+
+login_api = LoginAPI.as_view()
+
 
 """
 Logs a user out and deletes their token from the database
