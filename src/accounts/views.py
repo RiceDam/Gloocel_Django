@@ -4,8 +4,10 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from django.contrib.auth.models import User
 from .serializers import PersonSerializer
 import datetime
+
 
 """
 Registers a user if they are (Haven't tested, don't know how
@@ -42,8 +44,11 @@ class LoginAPI(ObtainAuthToken):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
 
+        if not User.objects.filter(username=request.data.get('username')).exists():
+            return Response('Username does not exist', status=status.HTTP_404_NOT_FOUND)
+
         if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
             
         token, created = Token.objects.get_or_create(user=serializer.validated_data['user'])
 
