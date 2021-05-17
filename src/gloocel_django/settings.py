@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'phonenumber_field',
     'pika',
+    'psycopg2',
     #own app components
     'accounts',
     'device',
@@ -85,9 +86,25 @@ WSGI_APPLICATION = 'gloocel_django.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
+    #POSTGRES
+        'default': {
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': 'gloocel',
+
+        'USER': 'postgres',
+
+        'PASSWORD': 'b437de3f-f35b-4e07-a846-32526992f858',
+
+        'HOST': 'localhost',
+
+        'PORT': '5432',
     }
 }
 
