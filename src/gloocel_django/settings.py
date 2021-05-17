@@ -159,7 +159,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Token-based authentication
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.TokenAuthentication',
         'accounts.authentication.ExpiringTokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [

@@ -2,12 +2,10 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 from .models import Person
 
-# class RegisterSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = Person
-#         fields = ('__all__')
-
+"""
+Serializer for the Person model. Used for the RegisterAPI, but it
+was never tested.
+"""
 class PersonSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):

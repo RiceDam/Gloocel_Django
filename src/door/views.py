@@ -23,11 +23,6 @@ class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
  def get(self, request, *args, **kwargs):
   return self.list(request, *args, **kwargs)
 
- """
- Creates a new door (probably don't want this)
- """
- # def post(self, request, *args, **kwargs):
- #  return self.create(request, *args, **kwargs)
 
 class DoorOpen(APIView):
 
