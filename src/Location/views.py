@@ -15,8 +15,12 @@ class LocationList(
   def get(self, request, *args, **kwargs):
    return self.list(request, *args, **kwargs)
 
-  def post(self, request, *args, **kwargs):
-   return self.create(request, *args, **kwargs)
+  """
+  Commented out as we don't want users to be able to create
+  new locations
+  """
+#   def post(self, request, *args, **kwargs):
+#    return self.create(request, *args, **kwargs)
 
 class LocationDetail(
  mixins.RetrieveModelMixin,
@@ -30,10 +34,19 @@ class LocationDetail(
   def get(self, request, *args, **kwargs):
    return self.retrieve(request, *args, **kwargs)
 
-  def put(self, request, *args, **kwargs):
-   return self.update(request, *args, **kwargs)
+  """
+  Commented out as we don't want users to be able to update
+  current locations
+  """
+#   def put(self, request, *args, **kwargs):
+#    return self.update(request, *args, **kwargs)
 
-  def delete(self, request, *args, **kwargs):
-   return self.destroy(request, *args, **kwargs)
+
+  """
+  Commented out as we don't want users to be able to delete
+  current locations
+  """
+#   def delete(self, request, *args, **kwargs):
+#    return self.destroy(request, *args, **kwargs)
 
 

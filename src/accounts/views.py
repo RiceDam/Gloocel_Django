@@ -8,10 +8,9 @@ from django.contrib.auth.models import User
 from .serializers import PersonSerializer
 import datetime
 
-
 """
 Registers a user if they are (Haven't tested, don't know how
-to format the JSON on postman)
+to format the JSON on postman with the current model)
 """
 class RegisterAPI(generics.GenericAPIView):
     # Checks if the user.is_staff before allowing them to 
@@ -77,8 +76,8 @@ class VerifyAPI(APIView):
     def get(self, request, format=None):
         """
         Technically never reaches these conditions as the 
-        'rest_framework.authentication.TokenAuthentication', but I 
-        implemented it incase you wanted to add additional responses
+        'rest_framework.authentication.TokenAuthentication' handles it,
+        but I implemented it incase you wanted to add additional responses
         or switch away from the rest framework's token authentication
         """
         if request.auth == None:
