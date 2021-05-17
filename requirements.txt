@@ -25,3 +25,4 @@ swapper==1.1.2.post1
 typing-extensions==3.10.0.0
 urllib3==1.26.4
 virtualenv==20.4.6
+python-dotenv==1.0.0
