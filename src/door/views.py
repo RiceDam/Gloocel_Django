@@ -10,21 +10,12 @@ import json
 import pika
 from datetime import datetime
 
-
-"""
-TODO - Herbert
-
-Comment code
-"""
 class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
  queryset = Door.objects.all()
  serializer_class = DoorSerializer
 
  """
  Returns a list of all doors
-
- TODO
- Only return doors that the user has access to
  """
  def get(self, request, *args, **kwargs):
   return self.list(request, *args, **kwargs)
