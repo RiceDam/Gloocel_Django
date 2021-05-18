@@ -8,7 +8,17 @@ from rest_framework.response import Response
 from .serializers import DoorSerializer
 import json
 import pika
+import os
+from dotenv import load_dotenv
 from datetime import datetime
+
+# Environment Variables 
+load_dotenv()
+
+RMQ_USER = os.getenv('RMQ_USER')
+PASS = os.getenv('RMQ_PASS')
+IP = os.getenv('RMQ_IP')
+PORT = os.getenv('RMQ_PORT')
 
 class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
  queryset = Door.objects.all()
@@ -22,8 +32,8 @@ class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
 
 
 class DoorOpen(APIView):
-
- connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+ credentials = pika.PlainCredentials(RMQ_USER, PASS)
+ connection = pika.BlockingConnection(pika.ConnectionParameters(IP, PORT, '/', credentials))
  channel = connection.channel()
  channel.confirm_delivery()
 

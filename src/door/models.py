@@ -1,6 +1,8 @@
+import os
 from django.db import models
 from location.models import Location
 from django.db.models.signals import pre_save
+from dotenv import load_dotenv
 import pika 
 
 # Environment Variables 
