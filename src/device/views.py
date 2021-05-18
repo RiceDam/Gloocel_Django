@@ -3,6 +3,11 @@ from .serializers import DeviceSerializer
 from rest_framework import mixins
 from rest_framework import generics
 
+"""
+TODO - Herbert
+
+Comment/Document code
+"""
 class DeviceList(
  mixins.ListModelMixin,
  mixins.CreateModelMixin,

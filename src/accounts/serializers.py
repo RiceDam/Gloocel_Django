@@ -23,6 +23,7 @@ class PersonSerializer(serializers.ModelSerializer):
             'user.password',
         )
 
+        # Ensures that the username and email are a unique pair
         validators = [
             UniqueTogetherValidator(
                 queryset = Person.objects.all(),

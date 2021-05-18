@@ -5,7 +5,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.db.models.signals import post_save 
 from django.dispatch import receiver
 
-# Create your models here.
 
 class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
