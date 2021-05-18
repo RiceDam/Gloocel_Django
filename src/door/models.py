@@ -3,11 +3,14 @@ from location.models import Location
 from django.db.models.signals import pre_save
 import pika 
 
-"""
-TODO - Herbert
+# Environment Variables 
+load_dotenv()
 
-Comment code
-"""
+RMQ_USER = os.getenv('RMQ_USER')
+PASS = os.getenv('RMQ_PASS')
+IP = os.getenv('RMQ_IP')
+PORT = os.getenv('RMQ_PORT')
+
 class Door(models.Model):
  door_name = models.CharField(max_length = 50, null= True, unique=True)
  door_type = models.CharField(max_length = 30)
@@ -17,12 +20,16 @@ class Door(models.Model):
  def __str__(self):
   return self.door_name + ' | ' + str(self.location)
 
-# when model is created calls rabbitmq create queue function 
+# Created Queue function that creates a rabbitMQ queue when the mode is created 
 def create_queue(sender, instance, **kwargs):
   print("Done saving an instance now creating a queue")
-  # Change this for production
-  connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+  
+  # connection needs to be changed according to rabbitMQ
+  credentials = pika.PlainCredentials(RMQ_USER, PASS)
+  connection = pika.BlockingConnection(pika.ConnectionParameters(IP, PORT, '/', credentials))
   channel = connection.channel()
+
+  # creates queue on rabbitmq with the name of the door
   msg_table = channel.queue_declare(queue=instance.door_name)
   instance.message = msg_table
 
