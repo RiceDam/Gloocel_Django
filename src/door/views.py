@@ -18,9 +18,6 @@ class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
  Returns a list of all doors
  """
  def get(self, request, *args, **kwargs):
-
-
-   
   return self.list(request, *args, **kwargs)
 
 
