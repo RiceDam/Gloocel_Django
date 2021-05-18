@@ -3,7 +3,7 @@ from location.models import Location
 from django.db.models.signals import pre_save
 import pika 
 
-#Environment Variables 
+# Environment Variables 
 load_dotenv()
 
 RMQ_USER = os.getenv('RMQ_USER')
