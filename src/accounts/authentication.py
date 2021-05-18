@@ -4,7 +4,10 @@ from django.utils import timezone
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import exceptions
 
-# Using hours for testing. You may want to change to minutes when pushing to production
+"""
+Currently using hours for testing. You may want to change 
+to minutes when pushing to production
+"""
 EXPIRE_HOURS = getattr(settings, 'REST_FRAMEWORK_TOKEN_EXPIRE_HOURS', 2)
 # EXPIRE_MINUTES = getattr(settings, 'REST_FRAMEWORK_TOKEN_EXPIRE_MINUTES', 15)
 

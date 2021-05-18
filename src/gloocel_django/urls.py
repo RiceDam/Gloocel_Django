@@ -23,12 +23,11 @@ urlpatterns = [
 
  path('', lambda request: redirect('admin/', permanent=False)),
 
-	# Not sure how to add additional API routes yet?...
  path('api/', include([
    path('device/', include('device.urls')),
    path('door/', include('door.urls')),
    path('location/', include('location.urls')),
    path('account/', include('accounts.urls')),
-  ]))
+ ]))
 ]
 

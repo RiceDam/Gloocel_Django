@@ -2,6 +2,11 @@ from django.db import models
 from rest_framework_api_key.models import APIKey
 from door.models import Door
 
+"""
+TODO - Herbert
+
+Comment/Document code
+"""
 class Device(models.Model):
 
   def key_default(myName):

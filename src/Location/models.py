@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Location(models.Model):
  location_name = models.CharField(max_length = 50, null = True)
  street_name = models.CharField(max_length=100, null= True)
@@ -10,6 +9,3 @@ class Location(models.Model):
 
  def __str__(self):
   return self.street_number + ' ' + self.street_name + ', ' + self.city
-
-
-

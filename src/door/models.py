@@ -3,7 +3,11 @@ from location.models import Location
 from django.db.models.signals import pre_save
 import pika 
 
-# Create your models here.
+"""
+TODO - Herbert
+
+Comment code
+"""
 class Door(models.Model):
  door_name = models.CharField(max_length = 50, null= True, unique=True)
  door_type = models.CharField(max_length = 30)
