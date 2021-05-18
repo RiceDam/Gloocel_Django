@@ -27,6 +27,9 @@ class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
  Only return doors that the user has access to
  """
  def get(self, request, *args, **kwargs):
+
+
+   
   return self.list(request, *args, **kwargs)
 
 
