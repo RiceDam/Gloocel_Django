@@ -10,6 +10,12 @@ import json
 import pika
 from datetime import datetime
 
+
+"""
+TODO - Herbert
+
+Comment code
+"""
 class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
  queryset = Door.objects.all()
  serializer_class = DoorSerializer
@@ -29,10 +35,10 @@ class DoorOpen(APIView):
  connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
  channel = connection.channel()
  channel.confirm_delivery()
- """
- Get an instance of the Door from the database
- """
 
+ """
+ Adds a message to the target door's message queue
+ """
  def load_queue(self, door):
   try:
 
@@ -52,12 +58,18 @@ class DoorOpen(APIView):
     'error': str(e)
    }) 
 
+ """
+ Get an instance of the Door from the database
+ """
  def get_door(self, pk):
   try:
    return Door.objects.get(pk=pk)
   except Door.DoesNotExist:
    raise Http404
 
+ """
+ Uses the JSON data to send a message to a door's message queue
+ """
  def post(self, request, pk, format=None):
   door = self.get_door(pk)
   response = self.load_queue(door)

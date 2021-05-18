@@ -13,8 +13,10 @@ Registers a user if they are (Haven't tested, don't know how
 to format the JSON on postman with the current model)
 """
 class RegisterAPI(generics.GenericAPIView):
-    # Checks if the user.is_staff before allowing them to 
-    # create an account
+    """
+    Checks if the user.is_staff before allowing them to 
+    create an account
+    """
     permission_classes = [IsAdminUser]
 
     def post(self, request):

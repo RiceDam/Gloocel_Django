@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'pika',
     'psycopg2',
+    
     #own app components
     'accounts',
     'device',
