@@ -19,6 +19,7 @@ RMQ_USER = os.getenv('RMQ_USER')
 PASS = os.getenv('RMQ_PASS')
 IP = os.getenv('RMQ_IP')
 PORT = os.getenv('RMQ_PORT')
+CREDENTIALS = pika.PlainCredentials(RMQ_USER, PASS)
 
 class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
  queryset = Door.objects.all()
@@ -32,8 +33,7 @@ class DoorList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
 
 
 class DoorOpen(APIView):
- credentials = pika.PlainCredentials(RMQ_USER, PASS)
- connection = pika.BlockingConnection(pika.ConnectionParameters(IP, PORT, '/', credentials))
+ connection = pika.BlockingConnection(pika.ConnectionParameters(IP, PORT, '/', CREDENTIALS))
  channel = connection.channel()
  channel.confirm_delivery()
 
@@ -41,7 +41,12 @@ class DoorOpen(APIView):
  Adds a message to the target door's message queue
  """
  def load_queue(self, door):
+  
   try:
+   if not self.connection or self.connection.is_closed:
+    print("Connection with RabbitMQ has ended... reconnected")
+    self.connection = pika.BlockingConnection(pika.ConnectionParameters(IP, PORT, '/', CREDENTIALS))
+    self.channel = self.connection.channel()
 
    now = datetime.now()
    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -51,13 +56,13 @@ class DoorOpen(APIView):
    routing_key=door.door_name,
    body=message, mandatory=True)
 
-   return json.dumps({
+   return {
     'success': 'Added a message request to ' + door.door_name + ' ' + message
-   })
+   }
   except Exception as e:
-   return json.dumps({
-    'error': str(e)
-   }) 
+   return {
+    "error": str(e)
+   }
 
  """
  Get an instance of the Door from the database
