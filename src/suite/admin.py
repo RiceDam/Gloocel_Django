@@ -1,4 +1,6 @@
 from django.contrib import admin
-from .models import Suite
+
 # Register your models here.
-admin.site.register(Suite)
+from .models import Location 
+
+admin.site.register(Location)
